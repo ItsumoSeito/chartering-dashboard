@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-charteringdashboard-staging-4d2c0-authRole",
+      "UnauthRoleArn": "arn:aws:iam::523821071672:role/amplify-charteringdashboard-staging-4d2c0-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::523821071672:role/amplify-charteringdashboard-staging-4d2c0-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-charteringdashboard-staging-4d2c0-deployment",
+      "UnauthRoleName": "amplify-charteringdashboard-staging-4d2c0-unauthRole",
+      "StackName": "amplify-charteringdashboard-staging-4d2c0",
+      "StackId": "arn:aws:cloudformation:eu-central-1:523821071672:stack/amplify-charteringdashboard-staging-4d2c0/20b36590-236d-11ef-8911-06a6d4c2f39d",
+      "AmplifyAppId": "drqfbu0xbo7be"
+    },
+    "categories": {
+      "api": {
+        "charteringdashboard": {}
+      },
+      "auth": {
+        "charteringdashboard15fa72f0": {}
+      }
+    }
+  }
+}

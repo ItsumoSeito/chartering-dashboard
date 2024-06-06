@@ -1,0 +1,17 @@
+type Request
+  @model
+  @auth(rules: [{ allow: groups, groups: ["Customers", "Operations"] }]) {
+  id: ID!
+  originAirport: String!
+  originAirportCode: String!
+  destinationAirport: String!
+  destinationAirportCode: String!
+  requestedDepartureDate: String!
+  cargoType: String!
+  cargoWeight: Float!
+  cargoVolume: Float!
+  cargoLength: Float!
+  cargoWidth: Float!
+  cargoHeight: Float!
+  cargoSpecialHandlingInformation: String
+}
