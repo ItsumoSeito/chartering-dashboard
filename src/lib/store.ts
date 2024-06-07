@@ -1,15 +1,16 @@
 import { Mutate, create } from 'zustand';
+import { UserGroup } from './models/UserGroup';
 
 export type Store = {
-  userGroups: string[];
+  userGroups: UserGroup[];
   loggedIn: boolean;
   setLoggedIn: (loggedIn: boolean) => void;
-  setUserGroups: (userGroups: string[]) => void;
+  setUserGroups: (userGroups: UserGroup[]) => void;
 };
 
 export const useStore = create<Store>()((set) => ({
   userGroups: [],
   loggedIn: false,
-  setLoggedIn: (loggedIn: boolean) => set({ loggedIn }),
-  setUserGroups: (userGroups: string[]) => set({ userGroups }),
+  setLoggedIn: (loggedIn) => set({ loggedIn }),
+  setUserGroups: (userGroups) => set({ userGroups }),
 }));

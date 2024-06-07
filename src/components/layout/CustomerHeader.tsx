@@ -9,7 +9,7 @@ const CustomerHeader = () => {
   return (
     <div className="fixed top-0 left-0 right-0 h-20 bg-slate-600 bg-opacity-95 flex justify-center items-center gap-4">
       <div className="absolute left-4 flex">
-        <Link href={paths.home}>
+        <Link href={paths.home.path}>
           <Avatar>
             <AvatarImage src={'/images/logo.webp'} />
           </Avatar>

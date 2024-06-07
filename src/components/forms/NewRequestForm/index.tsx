@@ -40,12 +40,6 @@ const NewRequestForm: React.FC<Props> = ({ airports }) => {
     reValidateMode: 'onBlur',
   });
 
-  const fetchRequests = async () => {
-    const requests = await DataStore.query(Request);
-    console.log(requests);
-  };
-  fetchRequests();
-
   const submitHandler = (values: z.infer<typeof formSchema>) => {
     const beRequest = mapFeRequestToApi(values);
     DataStore.save(new Request(beRequest))

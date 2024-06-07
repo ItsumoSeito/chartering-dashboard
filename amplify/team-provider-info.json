@@ -17,6 +17,9 @@
       },
       "auth": {
         "charteringdashboard15fa72f0": {}
+      },
+      "function": {
+        "postSignUpUserAssignment": {}
       }
     }
   }

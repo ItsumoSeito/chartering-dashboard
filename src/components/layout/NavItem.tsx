@@ -5,11 +5,19 @@ import React, { PropsWithChildren } from 'react';
 import { buttonVariants } from '../ui/button';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { useStore } from '@/lib/store';
+import { UserGroup } from '@/lib/models/UserGroup';
 
 const NavItem: React.FC<
-  PropsWithChildren & { path: string; className?: string }
+  PropsWithChildren & {
+    path: { path: string; userGroups?: UserGroup[] };
+    className?: string;
+  }
 > = ({ path, children, className }) => {
   const pathname = usePathname();
+  const { userGroups } = useStore((state) => ({
+    userGroups: state.userGroups,
+  }));
 
   const active = (path: string) => {
     if (pathname === path) {
@@ -17,12 +25,17 @@ const NavItem: React.FC<
     }
   };
 
+  const disabled =
+    path.userGroups &&
+    !path.userGroups.some((group) => userGroups.includes(group));
+
   return (
     <Link
-      href={path}
+      href={disabled ? '' : path.path}
       className={cn(
         buttonVariants({ variant: 'outline' }),
-        active(path),
+        active(path.path),
+        disabled ? 'cursor-not-allowed opacity-50' : undefined,
         className,
         'rounded-2xl'
       )}

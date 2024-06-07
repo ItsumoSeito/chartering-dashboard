@@ -1,6 +1,8 @@
 import * as Auth from 'aws-amplify/auth';
+import * as API from 'aws-amplify/api';
 import { useStore } from './store';
 import { useToast } from '@/components/ui/use-toast';
+import { UserGroup } from './models/UserGroup';
 
 export const useSignIn = () => {
   const setLoggedIn = useStore((state) => state.setLoggedIn);
@@ -24,4 +26,14 @@ export const useSignIn = () => {
         });
     });
   };
+};
+
+export const getUserGroups = async () => {
+  try {
+    const user = await Auth.fetchAuthSession();
+    const groups = user.tokens?.accessToken.payload['cognito:groups'];
+    return (groups as UserGroup[]) || [];
+  } catch (error) {
+    return [];
+  }
 };

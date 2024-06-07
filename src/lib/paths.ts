@@ -1,13 +1,15 @@
+import { UserGroup } from './models/UserGroup';
+
 const paths = {
-  home: '/',
+  home: { path: '/' },
   customer: {
-    home: '/customers',
-    newRequest: '/customers/new-request',
-    requestsList: '/customers/requests',
-    bookings: '/customers/bookings',
+    home: { path: '/customers', userGroups: [UserGroup.Customers] },
+    newRequest: { path: '/customers/new-request' },
+    requestsList: { path: '/customers/requests' },
+    bookings: { path: '/customers/bookings' },
   },
   operations: {
-    home: '/operations',
+    home: { path: '/operations', userGroups: [UserGroup.Operations] },
   },
 };
 

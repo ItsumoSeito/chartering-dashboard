@@ -1,11 +1,13 @@
+'use client';
+
 import { useToast } from '@/components/ui/use-toast';
-import React, { useRef, useState } from 'react';
+import React, { use, useRef, useState } from 'react';
 import { signUpFormSchema, signUpConfirmationFormSchema } from './formSchema';
 import * as Auth from 'aws-amplify/auth';
 import { z } from 'zod';
 import { SignUpForm } from './SingUpForm';
 import { SignUpConfirmationForm } from './SingUpConfirmationForm';
-import { useSignIn } from '@/lib/auth';
+import { UserGroup } from '@/lib/models/UserGroup';
 
 type Props = {
   closeDialog: () => void;
@@ -17,22 +19,27 @@ const Index: React.FC<Props> = ({ closeDialog }) => {
   const userEmail = useRef<string | null>(null);
   const userPassword = useRef<string | null>(null);
   const { toast } = useToast();
-  const signIn = useSignIn();
 
   const signUpSubmitHandler = (values: z.infer<typeof signUpFormSchema>) => {
-    Auth.signUp({ username: values.email, password: values.password })
+    Auth.signUp({
+      username: values.email,
+      password: values.password,
+      options: { userAttributes: { 'custom:userGroup': UserGroup.Customers } },
+    })
       .then(() => {
         userEmail.current = values.email;
         userPassword.current = values.password;
         setSignUpRequested(true);
       })
-      .catch(() =>
+      .catch(() => {
         toast({
           title: 'Error',
-          description: 'An error occurred while signing up. Please try again.',
+          description:
+            'An error occurred while signing up. Please try signing up again.',
           variant: 'destructive',
-        })
-      );
+        });
+        closeDialog();
+      });
   };
 
   const signUpConfirmationSubmitHandler = (
@@ -44,31 +51,11 @@ const Index: React.FC<Props> = ({ closeDialog }) => {
     })
       .then((response) => {
         if (response.isSignUpComplete) {
-          setSignUpSuccess(true);
-
-          setTimeout(async () => {
-            // Try to sign in the user that was just signed up
-            const { success } = await signIn({
-              username: userEmail.current as string,
-              password: userPassword.current as string,
-            });
-            if (success) {
-              toast({
-                title: 'Signed in',
-                description: 'You have been signed in successfully',
-                variant: 'success',
-              });
-            } else {
-              toast({
-                title: 'Information',
-                description:
-                  'Could not automatically sign you in. Please sign in manually',
-              });
-            }
-          }, 2000);
-
           // Close the dialog and reset the user email and password
-          closeDialog();
+          setSignUpSuccess(true);
+          setTimeout(() => {
+            closeDialog();
+          }, 2000);
           userEmail.current = null;
           userPassword.current = null;
         } else {

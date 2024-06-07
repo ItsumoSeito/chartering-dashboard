@@ -1,5 +1,5 @@
 import NewRequestForm from '@/components/forms/NewRequestForm';
-import { fetchAirports, getAirports } from '@/lib/api/airports';
+import { getAirports } from '@/lib/api/airports';
 import React from 'react';
 
 const NewRequest = async () => {

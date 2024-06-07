@@ -9,13 +9,17 @@ import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
 import SignInForm from './forms/SingInForm';
 import SignUpForm from './forms/SingUpForm';
 import { useStore } from '@/lib/store';
-import { X as XIcon } from 'lucide-react';
+import { getUserGroups } from '@/lib/auth';
 
 const AuthControls = () => {
-  const { loggedIn, setLoggedIn } = useStore((state) => ({
-    loggedIn: state.loggedIn,
-    setLoggedIn: state.setLoggedIn,
-  }));
+  const { loggedIn, userGroups, setLoggedIn, setUserGroups } = useStore(
+    (state) => ({
+      loggedIn: state.loggedIn,
+      userGroups: state.userGroups,
+      setLoggedIn: state.setLoggedIn,
+      setUserGroups: state.setUserGroups,
+    })
+  );
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [signupDialogOpen, setSignUpDialogOpen] = useState(false);
   const { toast } = useToast();
@@ -44,6 +48,12 @@ const AuthControls = () => {
       .then(() => setLoggedIn(true))
       .catch(() => setLoggedIn(false));
   }, [setLoggedIn]);
+
+  useEffect(() => {
+    (async () => {
+      setUserGroups(userGroups);
+    })();
+  }, [loggedIn, setUserGroups, userGroups]);
 
   const classes = cn(buttonVariants({ variant: 'outline' }), 'rounded-2xl');
 
