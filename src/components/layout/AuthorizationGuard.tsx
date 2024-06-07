@@ -1,7 +1,6 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import { getUserGroups } from '@/lib/auth';
 import { UserGroup } from '@/lib/models/UserGroup';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';

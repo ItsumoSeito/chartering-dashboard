@@ -12,14 +12,12 @@ import { useStore } from '@/lib/store';
 import { getUserGroups } from '@/lib/auth';
 
 const AuthControls = () => {
-  const { loggedIn, userGroups, setLoggedIn, setUserGroups } = useStore(
-    (state) => ({
-      loggedIn: state.loggedIn,
-      userGroups: state.userGroups,
-      setLoggedIn: state.setLoggedIn,
-      setUserGroups: state.setUserGroups,
-    })
-  );
+  const { loggedIn, setLoggedIn, setUserGroups } = useStore((state) => ({
+    loggedIn: state.loggedIn,
+    userGroups: state.userGroups,
+    setLoggedIn: state.setLoggedIn,
+    setUserGroups: state.setUserGroups,
+  }));
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [signupDialogOpen, setSignUpDialogOpen] = useState(false);
   const { toast } = useToast();
@@ -51,9 +49,10 @@ const AuthControls = () => {
 
   useEffect(() => {
     (async () => {
+      const userGroups = await getUserGroups();
       setUserGroups(userGroups);
     })();
-  }, [loggedIn, setUserGroups, userGroups]);
+  }, [loggedIn, setUserGroups]);
 
   const classes = cn(buttonVariants({ variant: 'outline' }), 'rounded-2xl');
 
